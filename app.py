@@ -16,25 +16,23 @@ def marco():
     try:
 
         svc2_response = requests.post(SERVICE2_URL, timeout=5)
-        print(f"Service2 response: {svc2_response.json()}")
+        svc2_json = svc2_response.json() if svc2_response.status_code == 200 else {}
+        print(f"Service2 response: {svc2_json}")
 
         svc3_response = requests.post(SERVICE3_URL, timeout=5)
-        print(f"Service3 response: {svc3_response.json()}")
+        svc3_json = svc3_response.json() if svc3_response.status_code == 200 else {}
+        print(f"Service3 response: {svc3_json}")
 
         response = {
-         "answer": "POLO!"
+         "answer": "POLO!", "service2_response": svc2_json, "service3_response": svc3_json
         }
 
     except requests.exceptions.RequestException as e:
         print(f"Error sending Marco: {e}")
         return jsonify({"error": "Failed to contact other services"}), 500
     
-    return app.response_class(
-        response=jsonify(response).get_data(as_text=True),
-        mimetype='application/json',
-        status=200,
-        direct_passthrough=True
-    )
+    return jsonify(response), 200
+
 
 
 @app.route('/polo', methods=['GET'])
