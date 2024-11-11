@@ -1,0 +1,4 @@
+kubectl delete -f ./alice-aio.yaml
+kubectl delete -f ./bob-aio.yaml
+kubectl delete -f ./chris-aio.yaml
+

@@ -1,0 +1,4 @@
+kubectl apply -f ./alice-aio.yaml
+kubectl apply -f ./bob-aio.yaml
+kubectl apply -f ./chris-aio.yaml
+

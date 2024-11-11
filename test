@@ -1,0 +1,4 @@
+
+curl -X POST alice-service.default.svc.cluster.local:5000/marco
+curl -X POST bob-service.default.svc.cluster.local:5000/marco
+curl -X POST chris-service.default.svc.cluster.local:5000/marco
