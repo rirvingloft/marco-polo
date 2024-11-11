@@ -1,0 +1,16 @@
+
+echo "** cleanup"
+./cleanup
+
+echo "\n** build"
+./build
+
+echo "\n** deploy"
+./deploy
+
+echo "\n** healthcheck"
+./health
+
+echo "\n** test"
+./test
+
