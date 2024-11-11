@@ -32,8 +32,8 @@ metadata:
   name: bob-config
 data:
   PORT: "5000"
-  SERVICE2_URL: "http://alice-service.default.svc.cluster.local:5000/marco"
-  SERVICE3_URL: "http://chris-service.default.svc.cluster.local:5000/marco"
+  SERVICE2_URL: "http://alice-service.default.svc.cluster.local:5000/polo"
+  SERVICE3_URL: "http://chris-service.default.svc.cluster.local:5000/polo"
 
 
 ---
