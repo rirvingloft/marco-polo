@@ -7,6 +7,7 @@ app = Flask(__name__)
 # Fetch service names from environment variables, with default values
 SERVICE2_URL = os.environ.get("SERVICE2_URL", "http://service2:5000/marco")
 SERVICE3_URL = os.environ.get("SERVICE3_URL", "http://service3:5000/marco")
+HOSTNAME     = os.environ.get("HOSTNAME",     "marco-polo-service")
 
 @app.route('/marco', methods=['POST'])
 def marco():
@@ -25,7 +26,7 @@ def marco():
 # Health check route
 @app.route('/health', methods=['GET'])
 def health():
-    return jsonify({"status": "healthy"}), 200
+    return jsonify({"status": "healthy", "hostname": HOSTNAME}), 200
 
 if __name__ == '__main__':
     # Use an environment variable to set the port, with a default of 5000
