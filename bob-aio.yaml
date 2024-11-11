@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bob-deployment
+  labels:
+    app: bob-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mp-python
+  template:
+    metadata:
+      labels:
+        app: mp-python
+    spec:
+      containers:
+      - name: mp-python
+        image: irvnet/mp-python:latest
+        ports:
+        - containerPort: 5100
+        envFrom:
+        - configMapRef:
+            name: bob-config
+       
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: bob-config
+data:
+  PORT: "5100"
+  SERVICE2_URL: "http://service2:5000/marco"
+  SERVICE3_URL: "http://service3:5200/marco"
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+  name: bob-service
+spec:
+  ports:
+  - port: 5100
+    protocol: TCP
+    targetPort: 5100
+  selector:
+    app: mp-python
+  type: NodePort
