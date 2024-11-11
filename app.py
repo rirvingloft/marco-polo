@@ -12,16 +12,42 @@ HOSTNAME     = os.environ.get("HOSTNAME",     "marco-polo-service")
 @app.route('/marco', methods=['POST'])
 def marco():
     print("Received 'Marco'")
-    response = jsonify(message="Polo")
     
     try:
-        requests.post(SERVICE2_URL, json={}, timeout=5)
-        requests.post(SERVICE3_URL, json={}, timeout=5)
+
+        svc2_response = requests.post(SERVICE2_URL, timeout=5)
+        print(f"Service2 response: {svc2_response.json()}")
+
+        svc3_response = requests.post(SERVICE3_URL, timeout=5)
+        print(f"Service3 response: {svc3_response.json()}")
+
+        response = {
+         "answer": "POLO!"
+        }
+
     except requests.exceptions.RequestException as e:
         print(f"Error sending Marco: {e}")
         return jsonify({"error": "Failed to contact other services"}), 500
     
-    return response
+    return app.response_class(
+        response=jsonify(response).get_data(as_text=True),
+        mimetype='application/json',
+        status=200,
+        direct_passthrough=True
+    )
+
+
+@app.route('/polo', methods=['GET'])
+def polo():
+    polo_response =  { "answer": "POLO!",  "hostname": HOSTNAME }
+    return app.response_class(
+        response=jsonify(polo_response).get_data(as_text=True),
+        mimetype='application/json',
+        status=200,
+        direct_passthrough=True
+    )
+
+
 
 # Health check route
 @app.route('/health', methods=['GET'])
