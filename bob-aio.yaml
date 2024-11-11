@@ -18,7 +18,7 @@ spec:
       - name: mp-python
         image: irvnet/mp-python:latest
         ports:
-        - containerPort: 5100
+        - containerPort: 5000
         envFrom:
         - configMapRef:
             name: bob-config
@@ -31,7 +31,7 @@ kind: ConfigMap
 metadata:
   name: bob-config
 data:
-  PORT: "5100"
+  PORT: "5000"
   SERVICE2_URL: "http://service2:5000/marco"
   SERVICE3_URL: "http://service3:5200/marco"
 
@@ -44,9 +44,9 @@ metadata:
   name: bob-service
 spec:
   ports:
-  - port: 5100
+  - port: 5000
     protocol: TCP
-    targetPort: 5100
+    targetPort: 5000
   selector:
     app: mp-python
   type: NodePort
