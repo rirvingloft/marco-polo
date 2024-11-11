@@ -26,7 +26,18 @@ def marco():
 # Health check route
 @app.route('/health', methods=['GET'])
 def health():
-    return jsonify({"status": "healthy", "hostname": HOSTNAME}), 200
+    response =  { 
+                  "status": "healthy", 
+                  "hostname": HOSTNAME
+    }
+    return app.response_class(
+        response=jsonify(response).get_data(as_text=True),
+        mimetype='application/json',
+        status=200,
+        direct_passthrough=True
+    )
+
+
 
 if __name__ == '__main__':
     # Use an environment variable to set the port, with a default of 5000
