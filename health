@@ -1,4 +1,0 @@
-
-curl -X GET alice-service.default.svc.cluster.local:5000/health
-curl -X GET bob-service.default.svc.cluster.local:5000/health
-curl -X GET chris-service.default.svc.cluster.local:5000/health
