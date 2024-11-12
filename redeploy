@@ -8,4 +8,8 @@ echo "\n** build"
 echo "\n** deploy"
 ./deploy
 
+echo "\n** pods"
+sleep 3
+kubectl get pods
+
 
