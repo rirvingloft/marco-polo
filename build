@@ -1,5 +1,5 @@
 docker build -t mp-python:latest .
 docker tag mp-python:latest irvnet/mp-python:1.0.1
 docker tag mp-python:latest irvnet/mp-python:latest
-docker push irvnet/mp-python:latest
-docker push irvnet/mp-python:1.0.1
+docker push docker.io/irvnet/mp-python:latest
+docker push docker.io/irvnet/mp-python:1.0.1
