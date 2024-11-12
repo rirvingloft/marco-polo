@@ -8,22 +8,22 @@ logging.basicConfig(filename='record.log', level=logging.DEBUG)
 app = Flask(__name__)
 
 # Fetch service names from environment variables, with default values
-SERVICE2_URL = os.environ.get("SERVICE2_URL", "http://service2:5000/marco")
-SERVICE3_URL = os.environ.get("SERVICE3_URL", "http://service3:5000/marco")
-HOSTNAME     = os.environ.get("HOSTNAME",     "marco-polo-service")
+SERVICE2_URL = os.environ.get("SERVICE2_URL", "http://localhost:5000/marco")
+SERVICE3_URL = os.environ.get("SERVICE3_URL", "http://localhost:5000/marco")
+HOSTNAME     = os.environ.get("HOSTNAME",     "localhost")
 
-@app.route('/marco', methods=['POST'])
+@app.route('/marco', methods=['GET','POST'])
 def marco():
     app.logger.debug('issue contacting svc2 : %s', HOSTNAME)
     
     try:
 
-        svc2_response = requests.post(SERVICE2_URL, timeout=5)
+        svc2_response = requests.get(SERVICE2_URL, timeout=5)
         svc2_json = svc2_response.json() if svc2_response.status_code == 200 else { 
             app.logger.debug('issue contacting svc2 : %s', svc2_response.status_code)
         }
 
-        svc3_response = requests.post(SERVICE3_URL, timeout=5)
+        svc3_response = requests.get(SERVICE3_URL, timeout=5)
         svc3_json = svc3_response.json() if svc3_response.status_code == 200 else {
             app.logger.debug('issue contacting svc3 : %s', svc3_response.status_code)
         }
