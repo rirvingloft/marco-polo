@@ -62,16 +62,13 @@ def polo():
 def health():
     app.logger.info('health check requested for : %s', HOSTNAME)
     
-    response =  { 
+    payload =  { 
                   "status": "healthy", 
                   "hostname": HOSTNAME
     }
-    return app.response_class(
-        response=jsonify(response).get_data(as_text=True),
-        mimetype='application/json',
-        status=200,
-        direct_passthrough=True
-    )
+    pretty_payload = json.dumps(payload, indent=2)
+    return Response(pretty_payload, mimetype='application/json')
+
 
 
 
