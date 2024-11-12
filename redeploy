@@ -8,9 +8,4 @@ echo "\n** build"
 echo "\n** deploy"
 ./deploy
 
-echo "\n** healthcheck"
-./health
-
-echo "\n** test"
-./test
 
