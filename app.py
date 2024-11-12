@@ -1,6 +1,9 @@
 from flask import Flask, request, jsonify
 import requests
 import os
+import logging
+
+logging.basicConfig(filename='record.log', level=logging.DEBUG)
 
 app = Flask(__name__)
 
@@ -11,20 +14,22 @@ HOSTNAME     = os.environ.get("HOSTNAME",     "marco-polo-service")
 
 @app.route('/marco', methods=['POST'])
 def marco():
-    print("Received 'Marco'")
+    app.logger.debug('issue contacting svc2 : %s', HOSTNAME)
     
     try:
 
         svc2_response = requests.post(SERVICE2_URL, timeout=5)
-        svc2_json = svc2_response.json() if svc2_response.status_code == 200 else {}
-        print(f"Service2 response: {svc2_json}")
+        svc2_json = svc2_response.json() if svc2_response.status_code == 200 else { 
+            app.logger.debug('issue contacting svc2 : %s', svc2_response.status_code)
+        }
 
         svc3_response = requests.post(SERVICE3_URL, timeout=5)
-        svc3_json = svc3_response.json() if svc3_response.status_code == 200 else {}
-        print(f"Service3 response: {svc3_json}")
+        svc3_json = svc3_response.json() if svc3_response.status_code == 200 else {
+            app.logger.debug('issue contacting svc3 : %s', svc3_response.status_code)
+        }
 
         response = {
-         "answer": "POLO!", "service2_response": svc2_json, "service3_response": svc3_json
+         "answer": "POLO!", "service2_response": svc2_response.status_code, "service3_response": svc3_response.status_code
         }
 
     except requests.exceptions.RequestException as e:
@@ -50,6 +55,8 @@ def polo():
 # Health check route
 @app.route('/health', methods=['GET'])
 def health():
+    app.logger.info('health check requested for : %s', HOSTNAME)
+    
     response =  { 
                   "status": "healthy", 
                   "hostname": HOSTNAME
