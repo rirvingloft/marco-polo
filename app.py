@@ -1,4 +1,5 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response
+import json
 import requests
 import os
 import logging
@@ -28,15 +29,19 @@ def marco():
             app.logger.debug('issue contacting svc3 : %s', svc3_response.status_code)
         }
 
-        response = {
-         "answer": "POLO!", "service2_response": svc2_response.status_code, "service3_response": svc3_response.status_code
+        payload = {
+         'service2_json response': svc2_json,
+         'service3_json response': svc3_json
         }
+        pretty_payload = json.dumps(payload, indent=2)
+
 
     except requests.exceptions.RequestException as e:
         print(f"Error sending Marco: {e}")
         return jsonify({"error": "Failed to contact other services"}), 500
     
-    return jsonify(response), 200
+    return Response(pretty_payload, mimetype='application/json')
+
 
 
 
