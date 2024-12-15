@@ -3,6 +3,7 @@ kind: Service
 metadata:
   labels:
   name: bob-service
+  namespace: mp-bob
 spec:
   ports:
   - port: 5000
