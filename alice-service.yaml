@@ -3,6 +3,7 @@ kind: Service
 metadata:
   labels:
   name: alice-service
+  namespace: mp-alice
 spec:
   ports:
   - port: 5000
