@@ -3,6 +3,7 @@ kind: Service
 metadata:
   labels:
   name: chris-service
+  namespace: mp-chris
 spec:
   ports:
   - port: 5000
